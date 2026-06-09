@@ -12093,5 +12093,71 @@ html body .nv-mobile-footer p:last-child {
   }
 }
 </style>
+<style id="peptiglow-mobile-only-dynamic-center-final">
+@media only screen and (max-width: 600px) {
+  html body {
+    --pg-mobile-center-shift: 0px;
+  }
+
+  html body .main-wrapper .el-422078 .el-469503.section_row,
+  html body .main-wrapper .nv-safe-hero,
+  html body .main-wrapper .nv-hero-proof-row,
+  html body .main-wrapper .peptiglow-ingredient-main-row .peptiglow-ingredient-section,
+  html body .main-wrapper .peptiglow-ingredient-reverse-row .peptiglow-routine-section,
+  html body .main-wrapper .nv-results-proof,
+  html body .main-wrapper .nv-final-review-section,
+  html body .main-wrapper .peptiglow-ingredients-panel,
+  html body .main-wrapper .nv-offer-section,
+  html body .main-wrapper .peptiglow-final-faq,
+  html body .main-wrapper .nv-guarantee-section,
+  html body .main-wrapper .nv-discount-section {
+    transform: translateX(var(--pg-mobile-center-shift)) !important;
+  }
+}
+</style>
+<script id="peptiglow-mobile-only-dynamic-center-script">
+(function () {
+  function isMobile() {
+    return window.matchMedia && window.matchMedia('(max-width: 600px)').matches;
+  }
+
+  function centerMobileBlocks() {
+    if (!isMobile()) {
+      document.body.style.removeProperty('--pg-mobile-center-shift');
+      return;
+    }
+
+    document.body.style.setProperty('--pg-mobile-center-shift', '0px');
+
+    window.requestAnimationFrame(function () {
+      var anchor = document.querySelector('.main-wrapper .nv-safe-hero-media') || document.querySelector('.main-wrapper .nv-safe-hero');
+      if (!anchor) return;
+
+      var rect = anchor.getBoundingClientRect();
+      var viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+      var targetLeft = Math.max(0, (viewportWidth - rect.width) / 2);
+      var shift = Math.round((targetLeft - rect.left) * 10) / 10;
+
+      if (Math.abs(shift) < 0.5) shift = 0;
+      document.body.style.setProperty('--pg-mobile-center-shift', shift + 'px');
+    });
+  }
+
+  window.addEventListener('resize', centerMobileBlocks);
+  window.addEventListener('orientationchange', function () {
+    window.setTimeout(centerMobileBlocks, 120);
+  });
+  window.addEventListener('load', function () {
+    centerMobileBlocks();
+    window.setTimeout(centerMobileBlocks, 250);
+    window.setTimeout(centerMobileBlocks, 800);
+  });
+  if (document.readyState !== 'loading') {
+    centerMobileBlocks();
+  } else {
+    document.addEventListener('DOMContentLoaded', centerMobileBlocks);
+  }
+})();
+</script>
 </body>
 				</html>
